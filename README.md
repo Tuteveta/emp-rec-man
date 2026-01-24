@@ -1,25 +1,53 @@
-## AWS Amplify Next.js (App Router) Starter Template
+## User Roles
 
-This repository provides a starter template for creating applications using Next.js (App Router) and AWS Amplify, emphasizing easy setup for authentication, API, and database capabilities.
+- **SUPER_ADMIN**: Complete system access including:
+  - All HR Admin capabilities
+  - User role management
+  - System configuration
+  - Audit log access
+  - Delete any records
+  - Modify system settings
 
-## Overview
+- **HR_ADMIN**: Full employee management access
+  - Create, read, update, delete employee records
+  - Approve leave requests
+  - Conduct performance reviews
+  - View reports and analytics
 
-This template equips you with a foundational Next.js application integrated with AWS Amplify, streamlined for scalability and performance. It is ideal for developers looking to jumpstart their project with pre-configured AWS services like Cognito, AppSync, and DynamoDB.
+- **HR_OFFICER**: Standard HR operations
+  - Create, read, update employee records (no delete)
+  - View leave requests
+  - Input performance data
 
-## Features
+- **EMPLOYEE**: Self-service portal
+  - View own profile
+  - Submit leave requests
+  - View own performance reviews
 
-- **Authentication**: Setup with Amazon Cognito for secure user authentication.
-- **API**: Ready-to-use GraphQL endpoint with AWS AppSync.
-- **Database**: Real-time database powered by Amazon DynamoDB.
+## Initial Setup - Create Super Admin
 
-## Deploying to AWS
+After deployment:
 
-For detailed instructions on deploying your application, refer to the [deployment section](https://docs.amplify.aws/nextjs/start/quickstart/nextjs-app-router-client-components/#deploy-a-fullstack-app-to-aws) of our documentation.
+1. Go to **AWS Cognito Console**
+2. Find your User Pool
+3. Create groups in this order:
+   - `SUPER_ADMIN`
+   - `HR_ADMIN`
+   - `HR_OFFICER`
+   - `EMPLOYEE`
 
-## Security
+4. Create your first user:
+   - Email: your-admin@dict.gov.pg
+   - Temporary password (will be changed on first login)
 
-See [CONTRIBUTING](CONTRIBUTING.md#security-issue-notifications) for more information.
+5. Add user to `SUPER_ADMIN` group:
+   - Go to Users → Select user → Add to group → `SUPER_ADMIN`
 
-## License
+6. Login with admin account and create other users through the system
 
-This library is licensed under the MIT-0 License. See the LICENSE file.
+## Security Best Practices
+
+- **SUPER_ADMIN**: Limit to 2-3 trusted administrators only
+- **HR_ADMIN**: Department heads and senior HR staff
+- **HR_OFFICER**: Regular HR personnel
+- **EMPLOYEE**: All other staff members
