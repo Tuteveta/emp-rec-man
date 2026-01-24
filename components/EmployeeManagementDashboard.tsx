@@ -4,16 +4,12 @@ import React, { useState, useEffect } from 'react';
 import { generateClient } from 'aws-amplify/data';
 import { fetchAuthSession } from 'aws-amplify/auth';
 import type { Schema } from '@/amplify/data/resource';
-import { Amplify } from 'aws-amplify';
-import outputs from '@/amplify_outputs.json';
 import { 
   Search, Plus, Filter, Download, Upload, UserCircle, 
   Building2, LogOut, Users, Activity, Clock, TrendingUp, 
   AlertCircle, Eye, Edit, Trash2, X, Shield, Settings,
   FileText, BarChart3, Lock, UserCog, Database, CheckCircle
 } from 'lucide-react';
-
-Amplify.configure(outputs);
 
 const client = generateClient<Schema>();
 
@@ -27,7 +23,13 @@ interface UserInfo {
   isHROfficer: boolean;
 }
 
-const EmployeeManagementDashboard = () => {
+interface EmployeeManagementDashboardProps {
+  signOut?: () => void;
+  user?: any;
+  onSignOut?: () => void;
+}
+
+const EmployeeManagementDashboard = ({ signOut, user, onSignOut }: EmployeeManagementDashboardProps) => {
   const [currentView, setCurrentView] = useState('dashboard');
   const [employees, setEmployees] = useState<Array<Schema["Employee"]["type"]>>([]);
   const [selectedEmployee, setSelectedEmployee] = useState<Schema["Employee"]["type"] | null>(null);
@@ -83,6 +85,13 @@ const EmployeeManagementDashboard = () => {
 
   // Fetch employees from Amplify
   useEffect(() => {
+    // Safety check
+    if (!client?.models?.Employee?.observeQuery) {
+      console.error('Amplify client not initialized properly');
+      setLoading(false);
+      return;
+    }
+
     const subscription = client.models.Employee.observeQuery().subscribe({
       next: (data) => {
         setEmployees([...data.items]);
@@ -190,6 +199,15 @@ const EmployeeManagementDashboard = () => {
         console.error('Error deleting employee:', error);
         alert('Failed to delete employee. Please try again.');
       }
+    }
+  };
+
+  const handleSignOut = () => {
+    if (signOut) {
+      signOut();
+    }
+    if (onSignOut) {
+      onSignOut();
     }
   };
 
@@ -758,166 +776,166 @@ const EmployeeManagementDashboard = () => {
   );
 
   // Employee Modal
-const EmployeeModal = () => {
-  if (!showEmployeeModal) return null;
+  const EmployeeModal = () => {
+    if (!showEmployeeModal) return null;
 
-  const isReadOnly = modalMode === 'view';
-  const empData = selectedEmployee || {
-    employeeId: '',
-    fullName: '',
-    email: '',
-    phone: '',
-    department: '',
-    position: '',
-    employmentType: 'PERMANENT' as const,
-    status: 'ACTIVE' as const,
-    hireDate: new Date().toISOString().split('T')[0],
-    annualLeaveBalance: 20,
+    const isReadOnly = modalMode === 'view';
+    const empData = selectedEmployee || {
+      employeeId: '',
+      fullName: '',
+      email: '',
+      phone: '',
+      department: '',
+      position: '',
+      employmentType: 'PERMANENT' as const,
+      status: 'ACTIVE' as const,
+      hireDate: new Date().toISOString().split('T')[0],
+      annualLeaveBalance: 20,
+    };
+
+    return (
+      <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+        <div className="bg-white rounded-lg shadow-xl max-w-4xl w-full max-h-[90vh] overflow-hidden">
+          <div className="px-6 py-4 border-b border-gray-200 flex items-center justify-between bg-gray-50">
+            <h2 className="text-xl font-semibold text-gray-900">
+              {modalMode === 'create' ? 'Add New Employee' : 
+               modalMode === 'edit' ? 'Edit Employee' : 
+               'Employee Details'}
+            </h2>
+            <button onClick={closeEmployeeModal} className="text-gray-400 hover:text-gray-600">
+              <X className="w-6 h-6" />
+            </button>
+          </div>
+
+          <div className="p-6 overflow-y-auto max-h-[calc(90vh-140px)]">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="md:col-span-2">
+                <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
+                  <UserCircle className="w-5 h-5" />
+                  Personal Information
+                </h3>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Full Name *</label>
+                <input
+                  type="text"
+                  value={empData.fullName || ''}
+                  onChange={(e) => setSelectedEmployee({...empData, fullName: e.target.value} as any)}
+                  disabled={isReadOnly}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 disabled:bg-gray-50"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Email *</label>
+                <input
+                  type="email"
+                  value={empData.email || ''}
+                  onChange={(e) => setSelectedEmployee({...empData, email: e.target.value} as any)}
+                  disabled={isReadOnly}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 disabled:bg-gray-50"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Phone</label>
+                <input
+                  type="tel"
+                  value={empData.phone || ''}
+                  onChange={(e) => setSelectedEmployee({...empData, phone: e.target.value} as any)}
+                  disabled={isReadOnly}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 disabled:bg-gray-50"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Department *</label>
+                <input
+                  type="text"
+                  value={empData.department || ''}
+                  onChange={(e) => setSelectedEmployee({...empData, department: e.target.value} as any)}
+                  disabled={isReadOnly}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 disabled:bg-gray-50"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Position *</label>
+                <input
+                  type="text"
+                  value={empData.position || ''}
+                  onChange={(e) => setSelectedEmployee({...empData, position: e.target.value} as any)}
+                  disabled={isReadOnly}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 disabled:bg-gray-50"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Employment Type</label>
+                <select
+                  value={empData.employmentType || 'PERMANENT'}
+                  onChange={(e) => setSelectedEmployee({...empData, employmentType: e.target.value as any} as any)}
+                  disabled={isReadOnly}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 disabled:bg-gray-50"
+                >
+                  <option value="PERMANENT">Permanent</option>
+                  <option value="CONTRACT">Contract</option>
+                  <option value="CASUAL">Casual</option>
+                  <option value="INTERN">Intern</option>
+                </select>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Status</label>
+                <select
+                  value={empData.status || 'ACTIVE'}
+                  onChange={(e) => setSelectedEmployee({...empData, status: e.target.value as any} as any)}
+                  disabled={isReadOnly}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 disabled:bg-gray-50"
+                >
+                  <option value="ACTIVE">Active</option>
+                  <option value="ON_LEAVE">On Leave</option>
+                  <option value="SUSPENDED">Suspended</option>
+                  <option value="SEPARATED">Separated</option>
+                </select>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Hire Date</label>
+                <input
+                  type="date"
+                  value={empData.hireDate || ''}
+                  onChange={(e) => setSelectedEmployee({...empData, hireDate: e.target.value} as any)}
+                  disabled={isReadOnly}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 disabled:bg-gray-50"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div className="px-6 py-4 border-t border-gray-200 bg-gray-50 flex justify-end gap-3">
+            <button
+              onClick={closeEmployeeModal}
+              className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-100"
+            >
+              {isReadOnly ? 'Close' : 'Cancel'}
+            </button>
+            {!isReadOnly && (
+              <button
+                onClick={handleSaveEmployee}
+                className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+              >
+                {modalMode === 'create' ? 'Create Employee' : 'Save Changes'}
+              </button>
+            )}
+          </div>
+        </div>
+      </div>
+    );
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-      <div className="bg-white rounded-lg shadow-xl max-w-4xl w-full max-h-[90vh] overflow-hidden">
-        <div className="px-6 py-4 border-b border-gray-200 flex items-center justify-between bg-gray-50">
-          <h2 className="text-xl font-semibold text-gray-900">
-            {modalMode === 'create' ? 'Add New Employee' : 
-             modalMode === 'edit' ? 'Edit Employee' : 
-             'Employee Details'}
-          </h2>
-          <button onClick={closeEmployeeModal} className="text-gray-400 hover:text-gray-600">
-            <X className="w-6 h-6" />
-          </button>
-        </div>
-
-        <div className="p-6 overflow-y-auto max-h-[calc(90vh-140px)]">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="md:col-span-2">
-              <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
-                <UserCircle className="w-5 h-5" />
-                Personal Information
-              </h3>
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Full Name *</label>
-              <input
-                type="text"
-                value={empData.fullName || ''}
-                onChange={(e) => setSelectedEmployee({...empData, fullName: e.target.value} as any)}
-                disabled={isReadOnly}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 disabled:bg-gray-50"
-              />
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Email *</label>
-              <input
-                type="email"
-                value={empData.email || ''}
-                onChange={(e) => setSelectedEmployee({...empData, email: e.target.value} as any)}
-                disabled={isReadOnly}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 disabled:bg-gray-50"
-              />
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Phone</label>
-              <input
-                type="tel"
-                value={empData.phone || ''}
-                onChange={(e) => setSelectedEmployee({...empData, phone: e.target.value} as any)}
-                disabled={isReadOnly}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 disabled:bg-gray-50"
-              />
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Department *</label>
-              <input
-                type="text"
-                value={empData.department || ''}
-                onChange={(e) => setSelectedEmployee({...empData, department: e.target.value} as any)}
-                disabled={isReadOnly}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 disabled:bg-gray-50"
-              />
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Position *</label>
-              <input
-                type="text"
-                value={empData.position || ''}
-                onChange={(e) => setSelectedEmployee({...empData, position: e.target.value} as any)}
-                disabled={isReadOnly}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 disabled:bg-gray-50"
-              />
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Employment Type</label>
-              <select
-                value={empData.employmentType || 'PERMANENT'}
-                onChange={(e) => setSelectedEmployee({...empData, employmentType: e.target.value as any} as any)}
-                disabled={isReadOnly}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 disabled:bg-gray-50"
-              >
-                <option value="PERMANENT">Permanent</option>
-                <option value="CONTRACT">Contract</option>
-                <option value="CASUAL">Casual</option>
-                <option value="INTERN">Intern</option>
-              </select>
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Status</label>
-              <select
-                value={empData.status || 'ACTIVE'}
-                onChange={(e) => setSelectedEmployee({...empData, status: e.target.value as any} as any)}
-                disabled={isReadOnly}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 disabled:bg-gray-50"
-              >
-                <option value="ACTIVE">Active</option>
-                <option value="ON_LEAVE">On Leave</option>
-                <option value="SUSPENDED">Suspended</option>
-                <option value="SEPARATED">Separated</option>
-              </select>
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Hire Date</label>
-              <input
-                type="date"
-                value={empData.hireDate || ''}
-                onChange={(e) => setSelectedEmployee({...empData, hireDate: e.target.value} as any)}
-                disabled={isReadOnly}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 disabled:bg-gray-50"
-              />
-            </div>
-          </div>
-        </div>
-
-        <div className="px-6 py-4 border-t border-gray-200 bg-gray-50 flex justify-end gap-3">
-          <button
-            onClick={closeEmployeeModal}
-            className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-100"
-          >
-            {isReadOnly ? 'Close' : 'Cancel'}
-          </button>
-          {!isReadOnly && (
-            <button
-              onClick={handleSaveEmployee}
-              className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
-            >
-              {modalMode === 'create' ? 'Create Employee' : 'Save Changes'}
-            </button>
-          )}
-        </div>
-      </div>
-    </div>
-  );
-};
-
-return (
     <div className="min-h-screen bg-gray-50">
       <header className="bg-white shadow-sm border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -943,7 +961,11 @@ return (
                   )}
                 </div>
               </div>
-              <button className="p-2 hover:bg-gray-100 rounded-lg">
+              <button 
+                onClick={handleSignOut}
+                className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+                title="Sign Out"
+              >
                 <LogOut className="w-5 h-5 text-gray-600" />
               </button>
             </div>

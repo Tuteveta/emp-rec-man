@@ -1,10 +1,11 @@
 "use client";
+
 import { useState } from "react";
 import { Amplify } from "aws-amplify";
 import outputs from "@/amplify_outputs.json";
 import { Authenticator } from '@aws-amplify/ui-react';
 import EmployeeManagementDashboard from "@/components/EmployeeManagementDashboard";
-import LandingPage from "@/components/LandingPage";  // ✅ From components now
+import LandingPage from "@/components/LandingPage";
 import "@aws-amplify/ui-react/styles.css";
 import "./app.css";
 
@@ -23,7 +24,11 @@ export default function App() {
       signUpAttributes={['name']}
     >
       {({ signOut, user }) => (
-        <EmployeeManagementDashboard />
+        <EmployeeManagementDashboard 
+          signOut={signOut} 
+          user={user}
+          onSignOut={() => setShowDashboard(false)}
+        />
       )}
     </Authenticator>
   );
