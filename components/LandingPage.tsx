@@ -4,7 +4,6 @@ import {
   Users, BarChart, Calendar, 
   Award, Search, ChevronRight, Star, ArrowRight
 } from 'lucide-react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import Logo from "@/components/Logo";
@@ -114,25 +113,33 @@ export default function LandingPageComponent({ onGetStarted }: LandingPageProps)
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {features.map((feature, index) => (
-              <Card key={index} className="group hover:shadow-xl transition-all duration-300 hover:border-blue-400 border-2">
-                <CardHeader>
-                  <div className="w-14 h-14 bg-gradient-to-br from-blue-100 to-indigo-100 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                    <div className="text-blue-600">
-                      {feature.icon}
-                    </div>
+              <div 
+                key={index} 
+                className="bg-white rounded-xl p-6 border-2 border-gray-200 hover:border-blue-400 hover:shadow-xl transition-all duration-300 group"
+              >
+                {/* Icon */}
+                <div className="w-14 h-14 bg-gradient-to-br from-blue-100 to-indigo-100 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                  <div className="text-blue-600">
+                    {feature.icon}
                   </div>
-                  <CardTitle className="text-xl font-bold">{feature.title}</CardTitle>
-                  <CardDescription className="leading-relaxed text-base">
-                    {feature.description}
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <button className="text-sm text-blue-600 font-bold flex items-center gap-1 group-hover:gap-2 transition-all">
-                    Learn more
-                    <ChevronRight className="w-4 h-4" />
-                  </button>
-                </CardContent>
-              </Card>
+                </div>
+                
+                {/* Title */}
+                <h3 className="text-xl font-bold text-gray-900 mb-3">
+                  {feature.title}
+                </h3>
+                
+                {/* Description */}
+                <p className="text-base text-gray-600 leading-relaxed mb-4">
+                  {feature.description}
+                </p>
+                
+                {/* Learn More Link */}
+                <button className="text-sm text-blue-600 font-bold flex items-center gap-1 group-hover:gap-2 transition-all">
+                  Learn more
+                  <ChevronRight className="w-4 h-4" />
+                </button>
+              </div>
             ))}
           </div>
         </div>
