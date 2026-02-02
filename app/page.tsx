@@ -1,5 +1,4 @@
 "use client";
-
 import { useState } from "react";
 import { Amplify } from "aws-amplify";
 import outputs from "@/amplify_outputs.json";
@@ -29,23 +28,25 @@ export default function App() {
         components={{
           Header() {
             return (
-              <div className="text-center py-8 px-6 bg-white">
-                <div className="flex justify-center mb-6">
+              <div className="text-center pt-8 pb-6 px-6 bg-white">
+                <div className="flex justify-center mb-5">
                   <div className="flex items-center gap-3">
-                    <div className="bg-gradient-to-br from-blue-600 to-indigo-600 w-14 h-14 p-3 rounded-lg shadow-md flex items-center justify-center">
-                      <Building2 className="w-8 h-8 text-white" />
-                    </div>
+                    <img 
+                      src="/DICT.png" 
+                      alt="DICT PNG Logo"
+                      className="w-12 h-12 object-contain"
+                    />
                     <div className="text-left">
-                      <div className="text-lg font-bold text-gray-900">
+                      <div className="text-base font-bold text-gray-900">
                         DICT PNG
                       </div>
-                      <div className="text-xs text-gray-600">
+                      <div className="text-xs text-gray-500">
                         Employee Management
                       </div>
                     </div>
                   </div>
                 </div>
-                <h1 className="text-2xl font-bold text-gray-900 mb-2">
+                <h1 className="text-2xl font-bold text-gray-900 mb-1.5">
                   Welcome Back
                 </h1>
                 <p className="text-sm text-gray-600">
@@ -56,10 +57,10 @@ export default function App() {
           },
           Footer() {
             return (
-              <div className="text-center py-6 px-6 bg-white">
+              <div className="text-center pt-5 pb-6 px-6 bg-white">
                 <button
                   onClick={() => setShowAuth(false)}
-                  className="inline-flex items-center gap-2 text-sm text-blue-600 hover:text-blue-700 font-semibold transition-colors"
+                  className="inline-flex items-center gap-2 text-sm text-blue-600 hover:text-blue-700 font-medium transition-colors"
                   type="button"
                 >
                   <ArrowLeft className="w-4 h-4" />
@@ -83,9 +84,9 @@ export default function App() {
         )}
       </Authenticator>
       
-      {/* Copyright outside the card */}
-      <div className="fixed bottom-8 left-0 right-0 text-center">
-        <p className="text-sm text-gray-500">
+      {/* Copyright outside the card with proper spacing */}
+      <div className="fixed bottom-6 left-0 right-0 text-center z-10">
+        <p className="text-xs text-gray-500">
           © 2026 DICT PNG. All rights reserved.
         </p>
       </div>

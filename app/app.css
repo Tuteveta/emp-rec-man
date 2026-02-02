@@ -1,216 +1,128 @@
-/* Clean Professional Authentication Design - Fixed Password Field */
+/* Custom Authenticator Styling for Professional Look */
 
-/* Main container - Clean white background */
+/* Center the authenticator vertically and add proper spacing */
 [data-amplify-authenticator] {
-  min-height: 100vh;
-  background: #ffffff;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 2rem;
+  min-height: 100vh;
+  background-color: #f9fafb;
+  padding: 2rem 1rem;
 }
 
-/* Single professional card */
-[data-amplify-authenticator] [data-amplify-router] {
+/* Card container with balanced spacing */
+[data-amplify-authenticator] [data-amplify-container] {
   background: white;
-  border-radius: 1rem;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08), 0 2px 8px rgba(0, 0, 0, 0.04);
-  max-width: 440px;
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  max-width: 28rem;
   width: 100%;
-  border: 1px solid #e5e7eb;
+  padding: 0;
+  margin: 0 auto;
 }
 
-/* Header - Logo and Welcome */
-[data-amplify-authenticator] [data-amplify-router-content] > header {
-  background: white;
-  padding: 2.5rem 2.5rem 2rem;
-  border-bottom: 1px solid #f3f4f6;
-  text-align: center;
-}
-
-/* Form container */
+/* Form content spacing */
 [data-amplify-authenticator] form {
-  padding: 2rem 2.5rem;
-  background: white;
+  padding: 0 2.5rem 2rem 2.5rem;
 }
 
-/* Footer */
-[data-amplify-authenticator] [data-amplify-router-content] > footer {
-  background: white;
-  padding: 1.5rem 2.5rem 2rem;
-  border-top: 1px solid #f3f4f6;
-  text-align: center;
-}
-
-/* Hide Sign Up tabs */
-[data-amplify-authenticator] [role="tablist"] {
-  display: none !important;
-}
-
-/* SHOW ALL FIELDS in sign in form - let Amplify handle what to display */
-[data-amplify-authenticator] [data-amplify-router="signIn"] .amplify-field-group {
-  display: block !important;
-}
-
-/* Input fields - Clean and professional */
-[data-amplify-authenticator] .amplify-input,
-[data-amplify-authenticator] .amplify-select {
-  border: 1px solid #d1d5db;
+/* Input fields styling */
+[data-amplify-authenticator] input {
   border-radius: 0.5rem;
-  padding: 0.875rem 1rem;
-  font-size: 0.9375rem;
-  transition: all 0.2s;
-  width: 100%;
-  background: white;
-  color: #111827;
-  font-weight: 500;
+  border: 1px solid #d1d5db;
+  padding: 0.625rem 0.875rem;
+  font-size: 0.875rem;
 }
 
-[data-amplify-authenticator] .amplify-input:focus,
-[data-amplify-authenticator] .amplify-select:focus {
-  border-color: #3b82f6;
+[data-amplify-authenticator] input:focus {
   outline: none;
+  border-color: #3b82f6;
   box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
 }
 
-[data-amplify-authenticator] .amplify-input::placeholder {
-  color: #9ca3af;
-  font-weight: 400;
-}
-
 /* Labels */
-[data-amplify-authenticator] .amplify-label {
-  font-weight: 600;
-  color: #374151;
-  margin-bottom: 0.5rem;
+[data-amplify-authenticator] label {
   font-size: 0.875rem;
-  display: block;
+  font-weight: 500;
+  color: #374151;
+  margin-bottom: 0.375rem;
 }
 
-/* Field spacing */
-[data-amplify-authenticator] .amplify-field-group {
-  margin-bottom: 1.5rem;
-}
-
-/* Sign In button */
-[data-amplify-authenticator] button[type="submit"],
-[data-amplify-authenticator] .amplify-button--primary {
-  background: #2563eb !important;
-  border: none !important;
-  padding: 0.875rem 1.5rem !important;
-  border-radius: 0.5rem !important;
-  font-weight: 600 !important;
-  font-size: 0.9375rem !important;
-  color: white !important;
-  width: 100% !important;
-  cursor: pointer !important;
-  transition: all 0.2s !important;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05) !important;
-  margin-top: 0.5rem !important;
+/* Sign in button */
+[data-amplify-authenticator] button[type="submit"] {
+  background: #3b82f6;
+  color: white;
+  font-weight: 600;
+  font-size: 0.9375rem;
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  border: none;
+  width: 100%;
+  margin-top: 1.25rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
 }
 
 [data-amplify-authenticator] button[type="submit"]:hover {
-  background: #1d4ed8 !important;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+  background: #2563eb;
 }
 
 /* Forgot password link */
-[data-amplify-authenticator] .amplify-button--link {
-  color: #2563eb !important;
-  font-weight: 600 !important;
-  text-decoration: none !important;
-  font-size: 0.875rem !important;
-  transition: color 0.2s !important;
-  display: inline-block !important;
-  margin-top: 0.75rem !important;
-}
-
-[data-amplify-authenticator] .amplify-button--link:hover {
-  color: #1d4ed8 !important;
-  text-decoration: underline !important;
-}
-
-/* Error messages */
-[data-amplify-authenticator] .amplify-alert {
-  border-radius: 0.5rem;
-  padding: 0.75rem 1rem;
-  margin-bottom: 1rem;
+[data-amplify-authenticator] [data-amplify-footer] button {
+  color: #3b82f6;
   font-size: 0.875rem;
-}
-
-[data-amplify-authenticator] .amplify-alert--error {
-  background-color: #fef2f2;
-  border: 1px solid #fecaca;
-  color: #991b1b;
-}
-
-/* Password field - ensure it's visible */
-[data-amplify-authenticator] [data-amplify-password] {
-  position: relative;
-  display: block !important;
-}
-
-/* Password visibility toggle */
-[data-amplify-authenticator] [data-amplify-password] button {
-  position: absolute;
-  right: 0.75rem;
-  top: 50%;
-  transform: translateY(-50%);
-  background: transparent;
-  border: none;
-  padding: 0.5rem;
-  cursor: pointer;
-  color: #6b7280;
-}
-
-[data-amplify-authenticator] [data-amplify-password] button:hover {
-  color: #374151;
-}
-
-/* Fieldset */
-[data-amplify-authenticator] .amplify-fieldset {
-  border: none;
-  padding: 0;
-  margin: 0;
-}
-
-/* Footer button */
-[data-amplify-authenticator] footer button,
-[data-amplify-authenticator] footer a {
+  font-weight: 500;
   background: none;
   border: none;
-  color: #2563eb;
-  font-weight: 600;
-  padding: 0;
   cursor: pointer;
-  transition: color 0.2s;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-size: 0.875rem;
-  text-decoration: none;
+  padding: 0.5rem;
+  margin-top: 0.75rem;
 }
 
-[data-amplify-authenticator] footer button:hover,
-[data-amplify-authenticator] footer a:hover {
-  color: #1d4ed8;
+[data-amplify-authenticator] [data-amplify-footer] button:hover {
+  color: #2563eb;
   text-decoration: underline;
 }
 
-/* Responsive */
+/* Field groups spacing */
+[data-amplify-authenticator] [data-amplify-fieldgroup] {
+  margin-bottom: 1.25rem;
+}
+
+/* Error messages */
+[data-amplify-authenticator] [data-amplify-error] {
+  color: #dc2626;
+  font-size: 0.875rem;
+  margin-top: 0.5rem;
+}
+
+/* Remove default Amplify UI margins and paddings for cleaner look */
+[data-amplify-authenticator] [data-amplify-router] {
+  background: transparent;
+  box-shadow: none;
+  border: none;
+}
+
+/* Password visibility toggle */
+[data-amplify-authenticator] button[aria-label*="password"] {
+  background: none;
+  border: none;
+  color: #6b7280;
+  cursor: pointer;
+  padding: 0.5rem;
+}
+
+[data-amplify-authenticator] button[aria-label*="password"]:hover {
+  color: #374151;
+}
+
+/* Responsive adjustments */
 @media (max-width: 640px) {
   [data-amplify-authenticator] {
-    padding: 1rem;
+    padding: 1rem 0.75rem;
   }
   
-  [data-amplify-authenticator] [data-amplify-router] {
-    max-width: 100%;
-  }
-  
-  [data-amplify-authenticator] [data-amplify-router-content] > header,
-  [data-amplify-authenticator] form,
-  [data-amplify-authenticator] [data-amplify-router-content] > footer {
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
+  [data-amplify-authenticator] form {
+    padding: 0 1.5rem 1.5rem 1.5rem;
   }
 }

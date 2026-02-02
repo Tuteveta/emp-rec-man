@@ -4,9 +4,6 @@ import {
   Users, BarChart, Calendar, 
   Award, Search, ChevronRight, Star, ArrowRight
 } from 'lucide-react';
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import Logo from "@/components/Logo";
 
 interface LandingPageProps {
   onGetStarted?: () => void;
@@ -47,17 +44,28 @@ export default function LandingPageComponent({ onGetStarted }: LandingPageProps)
       <nav className="fixed top-0 left-0 right-0 bg-white/95 backdrop-blur-md border-b border-gray-200 z-50 shadow-sm">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
-            <Logo size="md" showText={true} />
+            {/* Logo */}
+            <div className="flex items-center gap-3">
+              <img 
+                src="/DICT.png" 
+                alt="DICT PNG Logo"
+                className="w-10 h-10 object-contain"
+              />
+              <div>
+                <div className="text-base font-bold text-gray-900">DICT PNG</div>
+                <div className="text-xs text-gray-600">Employee Management</div>
+              </div>
+            </div>
             
             <div className="hidden md:flex items-center gap-8">
               <a href="#features" className="text-sm font-semibold text-gray-700 hover:text-blue-600 transition-colors">Features</a>
               <a href="#about" className="text-sm font-semibold text-gray-700 hover:text-blue-600 transition-colors">About</a>
-              <Button 
+              <button 
                 onClick={onGetStarted}
-                className="bg-gradient-to-r from-blue-600 to-indigo-600 font-semibold shadow-lg hover:shadow-xl"
+                className="px-6 py-2.5 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all"
               >
                 Access Dashboard
-              </Button>
+              </button>
             </div>
           </div>
         </div>
@@ -66,10 +74,9 @@ export default function LandingPageComponent({ onGetStarted }: LandingPageProps)
       {/* Hero Section */}
       <section className="pt-32 pb-20 px-6 lg:px-8 bg-white">
         <div className="max-w-4xl mx-auto text-center">
-          <Badge variant="secondary" className="mb-8 text-sm font-semibold">
-            <Star className="w-4 h-4 mr-2" />
-            Enterprise HR Solution
-          </Badge>
+          <div className="inline-flex items-center gap-2 px-4 py-2 bg-blue-50 rounded-full mb-8">
+            <span className="text-sm font-semibold text-blue-600">Enterprise HR Solution</span>
+          </div>
           
           <h1 className="text-6xl lg:text-7xl font-black text-gray-900 mb-4 leading-[1.1] tracking-tight">
             Employee
@@ -87,14 +94,13 @@ export default function LandingPageComponent({ onGetStarted }: LandingPageProps)
           </p>
           
           <div className="flex justify-center">
-            <Button 
+            <button 
               onClick={onGetStarted}
-              size="lg" 
-              className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 group shadow-xl text-base font-bold py-7 px-8"
+              className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white text-base font-bold rounded-lg shadow-xl transition-all group"
             >
               Access Dashboard
-              <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
-            </Button>
+              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+            </button>
           </div>
         </div>
       </section>
@@ -156,21 +162,18 @@ export default function LandingPageComponent({ onGetStarted }: LandingPageProps)
             automated workflows, and enterprise security.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Button 
+            <button 
               onClick={onGetStarted}
-              size="lg" 
-              className="w-full sm:w-auto bg-white text-blue-600 hover:bg-blue-50 group text-base font-black px-10 py-6 shadow-2xl"
+              className="inline-flex items-center gap-2 px-10 py-4 bg-white text-blue-600 hover:bg-blue-50 text-base font-black rounded-lg shadow-2xl transition-all group"
             >
               Access Dashboard
-              <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
-            </Button>
-            <Button 
-              size="lg" 
-              variant="outline" 
-              className="w-full sm:w-auto border-2 border-white/30 text-white hover:bg-blue-700 text-base font-black px-10 py-6"
+              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+            </button>
+            <button 
+              className="px-10 py-4 border-2 border-white/30 text-white hover:bg-blue-700 text-base font-black rounded-lg transition-all"
             >
               Contact Support
-            </Button>
+            </button>
           </div>
         </div>
       </section>
@@ -180,9 +183,19 @@ export default function LandingPageComponent({ onGetStarted }: LandingPageProps)
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="grid md:grid-cols-4 gap-8 mb-8">
             <div className="md:col-span-2">
-              <Logo size="md" showText={true} variant="white" />
+              <div className="flex items-center gap-3 mb-4">
+                <img 
+                  src="/DICT.png" 
+                  alt="DICT PNG Logo"
+                  className="w-10 h-10 object-contain"
+                />
+                <div>
+                  <div className="text-base font-bold text-white">DICT PNG</div>
+                  <div className="text-xs text-gray-400">Employee Management</div>
+                </div>
+              </div>
               
-              <p className="text-sm leading-relaxed mt-4 mb-4 font-medium">
+              <p className="text-sm leading-relaxed font-medium">
                 Department of Information Communication & Technology
                 <br />Papua New Guinea
               </p>
